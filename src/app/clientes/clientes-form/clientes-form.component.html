@@ -1,0 +1,76 @@
+<h1 class="mt-4">Clientes</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ cliente.id  ? 'Edição' : 'Cadastro'}}</li> <!-- Comando para alterar o texto quando executar a tarefa -->
+</ol>
+
+<div class="container-form" >
+    <form #clienteForm="ngForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Div para mostrar mensagem de retorno -->
+        <div class="row">
+            <div class="col-md-4">
+
+                <!-- Div para mostrar mensagem de cadastro com sucesso -->
+                <div class="alert alert-success" role="alert" *ngIf= "success == true ">
+                    Cadastro realizado com sucesso!
+                </div>
+                <!-- Div para mostrar mensagem de erro -->
+                <div class="alert alert-success" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+            </div>
+        </div>
+        <!-- row do Id e dataCadastro -->
+        <div class="row" *ngIf="cliente.id"> <!-- *ngIf mostrar id e dataCadastro após cadastro com sucesso -->
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" [ngModel]="cliente.id" name="id" 
+                            class="form-control" disabled="true">
+                </div> 
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Data Cadastro:</label>
+                    <input type="text" [ngModel]="cliente.dataCadastro" name="dataCadastro" 
+                            class="form-control" disabled="true">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Nome *</label>
+                    <input type="text" [(ngModel)]="cliente.nome" name="nome" 
+                            class="form-control"/>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>CPF *</label>
+                    <input type="text" maxlength="11" [(ngModel)]="cliente.cpf" name="cpf" 
+                            class="form-control" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Salvar e Retornar cadastro -->
+        <div class="row">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-success" *ngIf="!cliente.id"> <!-- ngIf para nao mostrar o botao salvar caso usuario ja esteja cadastrado -->
+                        <i class="fa fa-save"></i> Salvar
+                    </button>
+                    <button type="submit" class="btn btn-primary" *ngIf="cliente.id"> <!-- ngIf sem a negativa. quando usuario ainda nao esta cadastrado -->
+                        <i class="fa fa-sync-alt"></i> Atualizar
+                    </button>
+                    <button type="button" class="btn btn-danger ml-1" (click)="retorno()">
+                        <i class="fa fa-arrow-left"></i> Voltar
+                    </button>
+                </div>                
+        </div>
+    </form>
+
+</div>

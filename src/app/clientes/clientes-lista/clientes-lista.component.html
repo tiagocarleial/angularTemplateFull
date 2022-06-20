@@ -1,0 +1,94 @@
+<div class="container-fluid py-3">
+    <div class="row gy-3">
+        <div class="col-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <app-page-title> Clientes </app-page-title>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="container-lista" >
+                        <div class="row">
+                            <div class="col-md-4">
+                                <!-- Div para mostrar mensagem quando deletar usuario -->
+                                <div class="alert alert-success" role="alert" *ngIf= "mensagemSucesso">
+                                    {{ mensagemSucesso }}
+                                </div>
+                                <!-- Div para mostrar mensagem de erro -->
+                                <div class="alert alert-success" role="alert" *ngIf="mensagemErro">
+                                    {{ mensagemErro }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <button class="btn btn-success" (click)="novoCadastro()">
+                                    <i class="fa fa-plus"></i> Novo
+                                </button>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- tabela lista -->
+                        <div class="row">
+                        <div class="col-md-5">
+                            <table class="table table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>CPF</th>
+                                        <th>Data Cadastro</th>
+                                        <th></th>
+                                    </tr> 
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let cliente of clientes"> 
+                                        <td>{{ cliente.id }}</td>
+                                        <td>{{ cliente.nome }}</td>
+                                        <td>{{ cliente.cpf }}</td>
+                                        <td>{{ cliente.dataCadastro }}</td>
+                                        <td>
+                                            <!--  botao edit -->        
+                                            <button class="btn btn-info" routerLink="/clientes/form/ {{ cliente.id }}">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+
+                                            <!-- botao de deletar/delecao -->
+                                            <button class="btn btn-danger" (click)="preparaDelecao(cliente)"
+                                                    data-toggle="modal" data-target="#modalDelecao"> <!-- habilita modal confirmacao -->
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- modal para pop-up de confirmação -->
+                    <div id="modalDelecao" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Confirmação</h4>
+                                </div>
+
+                                <div class="modal-body" *ngIf="clienteSelecionado">
+                                    Confirma a deleção do Cliente <br> {{clienteSelecionado.nome}} ?
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn btn-success"
+                                            (click)="deletarCliente()" data-dismiss="modal">Confirma</button>
+                                    <button class="btn btn-info" 
+                                            data-dismiss="modal">Cancela</button> <!-- fecha modal quando cancela -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
